@@ -32,7 +32,7 @@ pk_class(abs(v(pk_index)) < min_V) = 0;
 end_loop = length(pk_class);
 i = 1;
 
-if end_loop < 3 || sum(abs(pk_class)) == 0                                 % If the file has less than 3 critical points or all the CP are < min_V, we consider as a data without valid movement
+if end_loop < 3 || sum(abs(pk_class)) == 0                                                          % If the file has less than 3 critical points or there isn't at least one peak +1 and -1, we consider as a data without valid movement
     ME = [];
     return;
 end
@@ -64,11 +64,16 @@ seg_class = diff(pk_class);                                                % Cre
 seg_i = pk_index(seg_class == 1);                                          % seg_i selects the pk_index that corresponds to the beginning of a element
 seg_f = pk_index(find(seg_class == -1) + 1);                               % seg_f is the same, but for the end of a element
 
-if isempty(seg_i)
-    disp("eita");
+if isempty(seg_i) || isempty(seg_f)
+    ME = [];
+    return;
 end
-if isempty(seg_f)
-    disp("eita");
+
+if length(seg_i) == 1 && length(seg_f) == 1
+    if seg_i(1) >= seg_f(1)
+        ME = [];
+        return;
+    end
 end
 
 if seg_i(1) >= seg_f(1)                                                    % If first element end starts before first start (because of findpeaks functionality)
