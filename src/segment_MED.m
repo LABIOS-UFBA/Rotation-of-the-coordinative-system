@@ -1,8 +1,8 @@
 function [ME] = segment_MED(t, r, v, min_D, min_T, min_V)
 % -------------------------------------------------------------------------
-% The segments_MED.m function is responsible for segmenting and selecting 
+% The segments_MED.m function is responsible for segmenting and selecting
 % valid movement elements (ME) from a one-dimensional time series
-% 
+%
 % Input:
 %     t = vector with the time count
 %     r = vector with the time series of the position
@@ -10,7 +10,7 @@ function [ME] = segment_MED(t, r, v, min_D, min_T, min_V)
 %     min_D = minimum displacement of a valid element
 %     min_T = minimum duration of a valid element
 %     min_V = velocity corresponding to the instrumental error capture
-% 
+%
 % Output:
 %     ME = vector with two columns, corresponding to the start (first
 %          column) and end (second column) frames of the movement elements
@@ -32,7 +32,7 @@ pk_class(abs(v(pk_index)) < min_V) = 0;
 end_loop = length(pk_class);
 i = 1;
 
-if end_loop < 3 || sum(abs(pk_class)) == 0                                      % If the file has less than 3 critical points or all the CP are < min_V, we consider as a data without valid movement
+if end_loop < 3 || sum(abs(pk_class)) == 0                                 % If the file has less than 3 critical points or all the CP are < min_V, we consider as a data without valid movement
     ME = [];
     return;
 end
@@ -43,7 +43,7 @@ while(true)                                                                % Loo
     if i == end_loop                                                       % The reason is that we'll use the zero peaks to cut the elements and if there's a transition without a peak passing through 0, ...
         break                                                              % ... we need to create one in the index of the value closes to 0 between these two peaks
     end
-
+    
     if (pk_class(i) - pk_class(i + 1) == -2) || ...                        % Verify if there's two peaks occurring without a peak passing through the zero zone, i.e. between - min_V and + min_V
             (pk_class(i) - pk_class(i + 1) == 2 )
         [~, new_0] = min(abs(v(pk_index(i) : pk_index(i + 1))));           % Find the index of the velocity with the closest value to 0
@@ -71,25 +71,25 @@ if isempty(seg_f)
     disp("eita");
 end
 
-if seg_i(1) >= seg_f(1)                                                    % If first element end starts before first start (because of findpeaks functionality)                 
+if seg_i(1) >= seg_f(1)                                                    % If first element end starts before first start (because of findpeaks functionality)
     [new0, pos0] = min(abs(v(1 : seg_f(1) - 1)));
     if new0 <= min_V                                                       % Find if there is a velocity point before the first end that is less than min_V and consider the first element start
-        seg_i = [pos0; seg_i];                                                     
+        seg_i = [pos0; seg_i];
     else                                                                   % If not, delete this first element start
-        seg_f(1) = [];                                             
+        seg_f(1) = [];
     end
 end
 
 if seg_i(end) >= seg_f(end)                                                % The same for the final of the time series
     [new0, pos0] = min(abs(v(seg_i(end) + 1 : end)));
-    if new0 <= min_V  
-        seg_f = [seg_f; seg_i(end) + pos0 - 1];  
+    if new0 <= min_V
+        seg_f = [seg_f; seg_i(end) + pos0 - 1];
     else
         seg_i(end) = [];
-    end                              
+    end
 end
-   
-ME = [seg_i, seg_f];                                                 
+
+ME = [seg_i, seg_f];
 
 %% Selects the elements that pass through the filters
 

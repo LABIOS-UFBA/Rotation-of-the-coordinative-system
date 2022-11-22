@@ -1,8 +1,8 @@
 function [N, Nt, D, V, T, w, r2, peak] = analyze_elements_MED(r, v, t, ME)
 % -------------------------------------------------------------------------
-% The analyze_elements_MED.m function is responsible for calculating the 
+% The analyze_elements_MED.m function is responsible for calculating the
 % MED variables for a one-dimensional time series
-% 
+%
 % Input:
 %     r = position time series
 %     v = velocity time series
@@ -38,6 +38,6 @@ for i = 1 : N
     
     [~,pk] = findpeaks(abs(v(ME(i, 1) : ME(i, 2))));                       % Determining the number of peaks in the i-ME
     peak(i) = length(pk);
-
+    
 end
 end

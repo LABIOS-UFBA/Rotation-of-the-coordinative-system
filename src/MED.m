@@ -2,7 +2,7 @@ function [variable_table] = MED(name, flag, r, v, t, min_D, min_T, min_V)
 % -------------------------------------------------------------------------
 % The MED.m function is responsible for calculating the MED variables to an
 % n-dimensional file and exporting as output
-% 
+%
 % Input:
 %     name = name of the file
 %     flag = any flag that you want to put inside the table
@@ -38,7 +38,7 @@ for i = 1 : dim
 end
 
 if sum(n) > 1
-    nt_mean = sum(nt.*n) / sum(n);                                             % Calculating mean of the MED variables of each dimension
+    nt_mean = sum(nt.*n) / sum(n);                                         % Calculating mean of the MED variables of each dimension
     w_mean = sum(w.*n) / sum(n);
     r2_mean = sum(r2.*n) / sum(n);
     peak_mean = sum(peak.*n) / sum(n);

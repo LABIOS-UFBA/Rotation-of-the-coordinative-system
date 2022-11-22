@@ -1,7 +1,7 @@
 function joinFilesParfor(output_file, directory, file_type)
 % -------------------------------------------------------------------------
 % The joinFilesParfor.m function is responsible for joining the files
-% created in the parfor loop into a single file and then deleting the 
+% created in the parfor loop into a single file and then deleting the
 % temporary files
 %
 % Input:
@@ -34,7 +34,7 @@ parfor core = 1 : 6
         end
         delete([i_files(i).folder filesep i_files(i).name]);               % Delete the temp files
     end
-   
+    
     writetable(i_output, strcat(directory,string(core),'.csv'));           % Write output table
 end
 

@@ -1,14 +1,14 @@
 function [r, v, t] = treatDataMED_c3d(file_path, marker, lp, order)
 % -------------------------------------------------------------------------
-% The treatDataMED_c3d function is responsible for reading the c3d file, 
+% The treatDataMED_c3d function is responsible for reading the c3d file,
 % selecting the marker of interest and applying a low pass filter
-% 
+%
 % Input:
 %     file_path = location of .c3d file
 %     marker = desired marker name (as written in the c3d file)
 %     lp = cutoff frequency of the low pass filter
 %     order = low pass filter order
-% 
+%
 % Output:
 %     r = position time series
 %     v = velocity time series
@@ -23,7 +23,7 @@ r = btk_markers.(marker);                                                  % Sel
 if isequal(btk_unit, 'mm')                                                 % Correcting the scale to meters
     r = r / 1000;
 elseif isequal(btk_unit, 'cm')
-    r = r / 100; 
+    r = r / 100;
 end
 
 sample_rate = btkGetPointFrequency(btk_acq);

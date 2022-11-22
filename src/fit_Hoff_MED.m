@@ -1,7 +1,7 @@
 function [w,r2]=fit_Hoff_MED(t,v)
 % -------------------------------------------------------------------------
 % The fit_Hoff_MED.m function is responsible for calculating the similarity
-% index and r-square of the fitting between the movement element and the 
+% index and r-square of the fitting between the movement element and the
 % Hoff curve
 %
 % Input:
