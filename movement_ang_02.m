@@ -47,8 +47,8 @@ for i = 1 : number_files
     file_path = [files_list(i).folder filesep files_list(i).name];
     name = file_path(52 : end);                                              
 
-    [r_R, v_R, t] = treatDataMED_c3d(file_path, markerR, lp, order);       % Position, velocity and time vectors
-    [r_L, v_L, ~] = treatDataMED_c3d(file_path, markerL, lp, order);
+    [r_R, v_R, t] = treat_MED_c3d(file_path, markerR, lp, order);       % Position, velocity and time vectors
+    [r_L, v_L, ~] = treat_MED_c3d(file_path, markerL, lp, order);
     
     if(sum(abs(v_R), 'all') > sum(abs(v_L), 'all'))                        % Choosing the marker that had the biggest movement
         r = r_R;
@@ -56,7 +56,7 @@ for i = 1 : number_files
         r = r_L;
     end
     
-    [r_CM, ~, ~] = treatDataMED_c3d(file_path, markerCM, lp, order);
+    [r_CM, ~, ~] = treat_MED_c3d(file_path, markerCM, lp, order);
     r = r - r_CM(1,:);                                                     % Changing the origin of the coordinative system to the CM
 
     ang_centroid = ...
