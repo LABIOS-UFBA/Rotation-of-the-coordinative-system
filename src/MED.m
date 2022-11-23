@@ -15,13 +15,13 @@ function [variable_table] = MED(name, flag, r, v, t, min_D, min_T, min_V)
 %
 % Output:
 %     variable_table = table with MED variables for output
-%--------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 
-variable_table = struct;
+variable_table = table;
 
 dim = size(r, 2);                                                          % Number of dimensions of the data
 
-n = nan(dim, 1); nt = n; w = n; r2 = n; peak = n;
+n = zeros(dim, 1); nt = n; w = n; r2 = n; peak = n;
 
 for i = 1 : dim
     ME_i = segment_MED(t, r(:, i), v(:, i), min_D, min_T, min_V);          % Finds the frames that occur valid motion elements in the i-dimension
@@ -37,7 +37,7 @@ for i = 1 : dim
     peak(i) = mean(peakaux);
 end
 
-if sum(n) > 1
+if sum(n) > 0
     nt_mean = sum(nt.*n) / sum(n);                                         % Calculating mean of the MED variables of each dimension
     w_mean = sum(w.*n) / sum(n);
     r2_mean = sum(r2.*n) / sum(n);
@@ -49,13 +49,13 @@ else
     peak_mean = nan;
 end
 
-variable_table(1, 1).ind = name;                                           % Filling in the variables table
+variable_table.ind = name;                                                 % Filling in the variables table
 if(~isempty(flag))
-    variable_table(1, 1).flag = flag;
+    variable_table.flag = flag;
 end
-variable_table(1, 1).w_inertial = w_mean;
-variable_table(1, 1).r2_inertial = r2_mean;
-variable_table(1, 1).peak_inertial = peak_mean;
-variable_table(1, 1).nt_inertial = nt_mean;
-
+variable_table.w_inertial = w_mean;
+variable_table.r2_inertial = r2_mean;
+variable_table.peak_inertial = peak_mean;
+variable_table.nt_inertial = nt_mean;
+variable_table.n = sum(n);
 end

@@ -24,7 +24,12 @@ for i = 1 : num_files                                                      % Loo
     delete([files(i).folder filesep files(i).name]);                       % Delete the temp files
 end
 
-rmdir(directory);
+rmdir(directory);                                                          % Delete temp folder
+
+if ~isfolder('./output')                                                   % Creates an output folder if it doesn't exist
+    mkdir('./output');
+end
 
 writetable(output, output_file);                                           % Write output table
+
 end

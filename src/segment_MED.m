@@ -14,7 +14,7 @@ function [ME] = segment_MED(t, r, v, min_D, min_T, min_V)
 % Output:
 %     ME = vector with two columns, corresponding to the start (first
 %          column) and end (second column) frames of the movement elements
-%--------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 %% Find and classify critical points
 
 [~, pk_M_index] = findpeaks(v);                                            % Checking the positive peaks in the velocity time series
